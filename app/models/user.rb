@@ -3,19 +3,20 @@ class User < ActiveRecord::Base
   	has_many :topic, :through => :user_topic
     geocoded_by latitude: :latitude, longitude: :longitude
 	reverse_geocoded_by :latitude, :longitude
-	 validates_uniqueness_of  :username
-	 def gmaps4rails_title
+	validates_uniqueness_of  :username
+	
+     def gmaps4rails_title
       self.topic.pluck(:name).join(", ").titleize
     end
 
     def same_topic_user
-    	User.near(self, 10000, :order => 'distance').joins(:topic).where.not(:id => self.id).uniq.to_a
+    	User.near(self, 5000, :order => 'distance').joins(:topic).where.not(:id => self.id).uniq.to_a
     end
 
     def meetup
         meetup_api = MeetupApi.new
-        location = Geocoder.search("#{user.latitude}, #{user.longitude}").first
-        topics = user.topic
+        location = Geocoder.search("#{self.latitude}, #{self.longitude}").first
+        topics = self.topic
         topics.each do |topic|
             unless topic.meetup_category_id.nil?
                 params = { 
