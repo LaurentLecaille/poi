@@ -1,0 +1,8 @@
+.col-md-3
+	.well{:style => "min-height:150px"}
+		%button.btn.btn-default{"aria-pressed" => "false", :autocomplete => "off", "data-toggle" => "button", :type => "button", :style =>"display: block; width: 100%;", :id =>"topic", "topic-id" => topic.id}
+			.thumbnail{:style => "min-height:100px"}
+				= image_tag "topics/#{topic.name}.png"
+			.centered
+				%h5
+					= topic.name.capitalize

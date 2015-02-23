@@ -1,0 +1,18 @@
+.panel.panel-default
+	.panel-heading
+		%h3.panel-title{:style => "height:50px"}
+			.btn-group
+				%button.btn.btn-default{"aria-pressed" => "false", :autocomplete => "off",:onclick => "update_topic_list()", "data-toggle" => "button", :type => "button"}
+					All
+			- @topics.each do |topic|
+				.btn-group
+					%button.btn.btn-default{"aria-pressed" => "false", :autocomplete => "off",:onclick => "update_topic_list(#{topic.id})", "data-toggle" => "button", :type => "button"}
+						= image_tag "topics/#{topic.name}.png",{:style => "width:20px"}
+	%ul.list-group
+		- user_list.each do |user|
+			%li.list-group-item
+				-if @user.nil?
+					= "#{user.username}"
+				-else 
+					= "#{user.username} - #{user.user_friendly_distance(@user)}"
+			
